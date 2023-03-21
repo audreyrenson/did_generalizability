@@ -36,3 +36,28 @@ m0 = lm(y1-y0 ~ w, data=df %>% filter(a==0, s==1))
 Ey1 = mean(predict(m1, newdata=df %>% filter(s==0, a==1)))
 Ey0 = mean(predict(m0, newdata=df %>% filter(s==0, a==1)))
 Ey1 - Ey0
+
+#doubly robust estimator
+g_as = glm(a ~ s*w, binomial, df)
+g_s = glm(s ~ w, binomial, df)
+
+g00 = (1-predict(g_as, newdata = df %>% mutate(s=0), type='response')) * (1-predict(g_s, newdata=df, type='response'))
+g01 = (1-predict(g_as, newdata = df %>% mutate(s=1), type='response')) *    predict(g_s, newdata=df, type='response')
+g10 =    predict(g_as, newdata = df %>% mutate(s=0), type='response')  * (1-predict(g_s, newdata=df, type='response'))
+g11 =    predict(g_as, newdata = df %>% mutate(s=1), type='response')  *    predict(g_s, newdata=df, type='response')
+
+p00 = mean( (1-df$a)*(1-df$s)  )
+p10 = mean(     df$a*(1-df$s)  )
+
+
+I11 = 1*( df$a==1 & df$s==1  )
+I01 = 1*( df$a==0 & df$s==1  )
+I10 = 1*( df$a==1 & df$s==0  )
+
+mm1 = predict(m1, newdata=df)
+mm0 = predict(m0, newdata=df)
+
+eif = with(df,  I11*g10*(y1 - y0 - mm1)/(p10*g11) - I01*g00*(y1 - y0 - mm0)/(p00*g01) + I10*(mm1 - mm0)/p10 )
+dr = mean(eif)
+
+
