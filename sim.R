@@ -35,7 +35,7 @@ m0 = lm(y1-y0 ~ w, data=df %>% filter(a==0, s==1))
 
 Ey1 = mean(predict(m1, newdata=df %>% filter(s==0, a==1)))
 Ey0 = mean(predict(m0, newdata=df %>% filter(s==0, a==1)))
-Ey1 - Ey0
+gcomp = Ey1 - Ey0
 
 #doubly robust estimator
 g_as = glm(a ~ s*w, binomial, df)
