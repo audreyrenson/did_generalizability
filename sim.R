@@ -30,8 +30,13 @@ true_patt
 #g-computation
 df = genData(n=1e5, def)
 
+<<<<<<< HEAD
 m1 = lm(y1-y0 ~ w, data=df %>% filter(a==1, s==1))
 m0 = lm(y1-y0 ~ w, data=df %>% filter(a==0, s==1))
+=======
+m1 = lm(dy ~ w, data=df %>% filter(a==1, s==1))
+m0 = lm(dy ~ w, data=df %>% filter(a==0, s==1))
+>>>>>>> 00bc8f4a162cfeac2a04bb59864df3612c7806e1
 
 Ey1 = mean(predict(m1, newdata=df %>% filter(s==0, a==1)))
 Ey0 = mean(predict(m0, newdata=df %>% filter(s==0, a==1)))
