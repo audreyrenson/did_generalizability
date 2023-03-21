@@ -30,6 +30,10 @@ true_patt
 #g-computation
 df = genData(n=1e5, def)
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> refs/remotes/origin/main
 m1 = lm(y1-y0 ~ w, data=df %>% filter(a==1, s==1))
 m0 = lm(y1-y0 ~ w, data=df %>% filter(a==0, s==1))
 
