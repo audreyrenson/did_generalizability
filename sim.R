@@ -27,4 +27,11 @@ df1 = genData(n=1e5, def1)
 true_patt = mean(df1$y1[df1$a==1 & df1$s==0]) - mean(df0$y1[df0$a==1 & df0$s==0])
 true_patt
 
+#g-computation
+df = genData(n=1e5, def) %>% mutate(dy = y1-y0)
 
+m = lm(dy ~ a*w, data=df)
+
+Ey1 = mean(predict(m, newdata=df %>% filter(s==1) %>% mutate(a=1)))
+Ey0 = mean(predict(m, newdata=df %>% filter(s==1) %>% mutate(a=0)))
+Ey1 - Ey0
