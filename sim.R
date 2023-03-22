@@ -65,6 +65,7 @@ onesim = function(n) {
 }
 
 
+<<<<<<< HEAD
 sims = replicate(1000, onesim(1e5), simplify = FALSE)
 
 df_summary = bind_rows(sims) %>%
@@ -83,3 +84,13 @@ df_summary %>%
   summarise(bias2 = mean(error)^2,
             var = var(error))
 
+=======
+sims = replicate(100, onesim(1e5), simplify = FALSE)
+
+bind_rows(sims) %>%
+  pivot_longer(everything(), names_to='estimator', values_to='estimate') %>%
+  mutate(error = estimate - true_patt) %>%
+  ggplot(aes(x=error)) +
+  geom_histogram() +
+  facet_wrap(~estimator)
+>>>>>>> 0ddbfdb06adda780efea254bb9812ad5a8a90bc4
