@@ -65,13 +65,13 @@ onesim = function(n) {
 }
 
 
-sims = replicate(100, onesim(1e5), simplify = FALSE)
+sims = replicate(1000, onesim(1e5), simplify = FALSE)
 
 df_summary = bind_rows(sims) %>%
   pivot_longer(everything(), names_to='estimator', values_to='estimate') %>%
   mutate(error = estimate - true_patt)
 
-svg('sim100histograms.svg')
+svg('sim1000histograms.svg')
 df_summary %>%
   ggplot(aes(x=error)) +
   geom_histogram() +
