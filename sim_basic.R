@@ -6,7 +6,7 @@ library(tidyverse)
 library(simstudy)
 
 
-set.seed(5)
+set.seed(2)
 
 #generate data
 def = defData(varname = 's', formula = '0.1', dist = 'binary', variance = .1) %>%
